@@ -11,8 +11,17 @@ const client = new Client({
 
 client.on('ready', () => {
     console.log('WALL-E is ready');
-})
+
+    let commands = client.application.commands;
+    
+    commands.create({
+        name: 'ping',
+        description: 'replies with pong!'
+    });
+
+});
+
+
+
 
 client.login(process.env.TOKEN);
-
- 
