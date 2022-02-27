@@ -14,12 +14,10 @@ const client = new Client({
 client.on('ready', () => {
     console.log('WALL-E is ready')
 
-    let commands = client.application.commands
-
-    commands.create({
-        name: 'ping',
-        description: 'replies with pong!'
-    })
+    const guildID = '943648550942814248'
+    const guild = client.guilds.cache.get(guildID)
+    
+    createCmd(guild)
     
 })
 
@@ -27,19 +25,21 @@ client.on('messageCreate', message => {
     if(message.author.id === '942090822176890910'){
         if(message.toString() === 'test'){
             message.reply('working')
-            console.log(message.channel.name)
         }
-        if(message.toString() === 'del10'){
-            message.channel.bulkDelete(10, true)
-            console.log('10 messages deleted')
-        }
+
     }
     
 })
 
+client.on('interactionCreate', i => {
+    if(!i.isCommand() && i.user.bot){return}
 
-
-
+    if(i.commandName === 'clear'){
+        i.channel.bulkDelete(3)
+        i.reply('deleted')
+        i.channel.bulkDelete(1)
+    }
+})
 
 
 client.login(process.env.TOKEN)
