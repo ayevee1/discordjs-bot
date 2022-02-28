@@ -1,7 +1,7 @@
-const { Client, Intents, Interaction} = require('discord.js')
+const { Client, Intents} = require('discord.js')
 const dotenv = require('dotenv')
 dotenv.config()
-const {createCmd} = require('./SlashCmdHandler')
+const {createCmd} = require('./CmdMaker')
 
 
 const client = new Client({
@@ -35,10 +35,9 @@ client.on('interactionCreate', i => {
     if(!i.isCommand() && i.user.bot){return}
 
     if(i.commandName === 'clear'){
-        i.channel.bulkDelete(3)
-        i.reply('deleted')
-        i.channel.bulkDelete(1)
+        return
     }
+    
 })
 
 
