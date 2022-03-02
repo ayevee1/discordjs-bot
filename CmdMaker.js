@@ -1,4 +1,4 @@
-const createCmd = (gld) => {
+const createCmds = (gld) => {
     let commands
 
     if(gld) {
@@ -19,4 +19,4 @@ const createCmd = (gld) => {
     })
 }
 
-module.exports = {createCmd}
+module.exports = {createCmds}
