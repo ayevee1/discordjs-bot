@@ -2,7 +2,8 @@ const { Client, Intents} = require('discord.js')
 const dotenv = require('dotenv')
 dotenv.config()
 const {createCmds} = require('./CmdMaker')
-
+const fs = require('fs')
+const datas = require('./data.json')
 
 const client = new Client({
     intents: [
@@ -11,9 +12,9 @@ const client = new Client({
     ]
 })
 
+
 client.on('ready', () => {
     console.log('WALL-E is ready')
-
     const guildID = '943648550942814248'
     const guild = client.guilds.cache.get(guildID)
     
@@ -28,6 +29,11 @@ client.on('messageCreate', message => {
                 type: 'text'
             })
             message.channel.delete()
+            datas.data.channelRmks = datas.data.channelRmks + 1 
+            data = JSON.stringify(datas)
+            fs.writeFile('data.json', data, (err) => {
+                if(err) throw err
+            })
         }
     }
 })
