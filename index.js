@@ -4,6 +4,7 @@ dotenv.config()
 const {createCmds} = require('./CmdMaker')
 const fs = require('fs')
 const datas = require('./data.json')
+const mong = require('mongoose')
 
 const client = new Client({
     intents: [
@@ -13,7 +14,10 @@ const client = new Client({
 })
 
 
-client.on('ready', () => {
+client.on('ready', async () => {
+    await mong.connect(process.env.MONGO_URI, {
+        keepAlive: true
+    })
     console.log('WALL-E is ready')
     const guildID = '943648550942814248'
     const guild = client.guilds.cache.get(guildID)
@@ -24,9 +28,12 @@ client.on('ready', () => {
 
 client.on('messageCreate', message => {
     if(message.author.id === '942090822176890910'){
+        console.log(message.author.createdAt)
         if(message.toString() === 'rmk'){
-            message.guild.channels.create('general', {
+            message.guild.channels.create(message.channel.name, {
                 type: 'text'
+            }).then((channel) => {
+                channel.setParent('943648550942814249')
             })
             message.channel.delete()
             datas.data.channelRmks = datas.data.channelRmks + 1 
