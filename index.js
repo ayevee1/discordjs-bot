@@ -36,11 +36,6 @@ client.on('messageCreate', message => {
                 channel.setParent('943648550942814249')
             })
             message.channel.delete()
-            datas.data.channelRmks = datas.data.channelRmks + 1 
-            data = JSON.stringify(datas)
-            fs.writeFile('data.json', data, (err) => {
-                if(err) throw err
-            })
         }
     }
 })
